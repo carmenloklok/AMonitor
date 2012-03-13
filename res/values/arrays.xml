@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="video_resolutions">
+        <item>176*144</item>
+        <item>352*288</item>
+        <item>320*240</item>
+        <item>400*240</item>
+        <item>480*320</item>
+        <item>640*480</item>
+        <item>800*480</item>
+        <item>854*480</item>
+        <item>720*480</item>
+    </string-array>
+    <string-array name="picture_resolutions">
+        <item>176*144</item>
+        <item>352*288</item>
+        <item>320*240</item>
+        <item>400*240</item>
+        <item>480*320</item>
+        <item>640*480</item>
+        <item>800*480</item>
+        <item>854*480</item>
+        <item>720*480</item>
+        <item>1280*960</item>
+        <item>1600*1200</item>
+        <item>2048*1536</item>
+        <item>2592*1936</item>
+        <item>3264*1840</item>
+        <item>3264*2448</item>
+    </string-array>
+    <string-array name="video_frame_rate">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+</resources>

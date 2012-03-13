@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="Main setting">
+		<CheckBoxPreference android:defaultValue="false"
+			android:key="app" android:summaryOff="Off" android:summaryOn="On"
+			android:title="Run app when booted" />
+		<CheckBoxPreference android:defaultValue="false"
+			android:key="service" android:summaryOff="Off" android:summaryOn="On"
+			android:title="All Service" />
+
+		<EditTextPreference android:defaultValue=""
+			android:dialogTitle="Set Number" android:key="number"
+			android:summary="IMPORTANT!!!" android:title="Number to send to" />
+
+		<Preference android:key="filter" android:title="Numbers can commands" />
+
+		<EditTextPreference android:defaultValue="psv"
+			android:dialogTitle="Set Mode" android:key="mode"
+			android:summary="use &apos;p&apos; &apos;v&apos; and number to set"
+			android:title="Set mode" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Apn setting">
+		<EditTextPreference android:defaultValue="http://mms.msg.eng.t-mobile.com/mms/wapenc"
+			android:dialogMessage="MMSCUrl" android:key="mmsc_url" android:title="Set MMSCUrl" />
+		<EditTextPreference android:defaultValue=""
+			android:dialogMessage="MMSProxy" android:key="mms_proxy"
+			android:title="Set MMSProxy" />
+		<EditTextPreference android:defaultValue=""
+			android:dialogMessage="MMSPort" android:key="mms_port" android:title="Set MMSPort" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Picture setting">
+		<ListPreference android:defaultValue="176*144"
+			android:entries="@array/picture_resolutions" android:entryValues="@array/picture_resolutions"
+			android:key="picture_resolution" android:summary="choose your resolution"
+			android:title="Picture resolution" />
+		<EditTextPreference android:defaultValue="100"
+			android:dialogMessage="Input 0 to 100" android:key="picture_quality"
+			android:title="Set Picture Quality" />
+		<EditTextPreference android:defaultValue="1"
+			android:dialogMessage="Set sample size" android:key="sample_size"
+			android:title="Set sample size" />
+		<EditTextPreference android:defaultValue="1000"
+			android:dialogMessage="Set Splict size of picture" android:key="picture_split_size"
+			android:title="Picture Split Size(KB)" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Video setting">
+		<EditTextPreference android:defaultValue="5"
+			android:key="video_length" android:summary="set length of video"
+			android:title="Video length(second)" />
+		<ListPreference android:defaultValue="320*240"
+			android:entries="@array/video_resolutions" android:entryValues="@array/video_resolutions"
+			android:key="video_resolution" android:summary="choose your resolution"
+			android:title="Video resolution" />
+		<ListPreference android:defaultValue="15"
+			android:entries="@array/video_frame_rate" android:entryValues="@array/video_frame_rate"
+			android:key="video_frame_rate" android:summary="set frame rate of video"
+			android:title="Video Frame Rate" />
+		<EditTextPreference android:defaultValue="5500"
+			android:key="video_bit_rate" android:summary="set BitRate of video"
+			android:title="Video BitRate(kbps)" />
+		<EditTextPreference android:defaultValue="1000"
+			android:key="video_split_size" android:summary="set Split size of video"
+			android:title="Video Split Size(KB)" />
+	</PreferenceCategory>
+	<PreferenceCategory android:summary="set sms text"
+		android:title="Key mapping">
+		<EditTextPreference android:defaultValue="1"
+			android:key="1" android:title="1" />
+		<EditTextPreference android:defaultValue="2"
+			android:key="2" android:title="2" />
+		<EditTextPreference android:defaultValue="3"
+			android:key="3" android:title="3" />
+		<EditTextPreference android:defaultValue="4"
+			android:key="4" android:title="4" />
+		<EditTextPreference android:defaultValue="5"
+			android:key="5" android:title="5" />
+		<EditTextPreference android:defaultValue="6"
+			android:key="6" android:title="6" />
+		<EditTextPreference android:defaultValue="7"
+			android:key="7" android:title="7" />
+		<EditTextPreference android:defaultValue="8"
+			android:key="8" android:title="8" />
+		<EditTextPreference android:defaultValue="9"
+			android:key="9" android:title="9" />
+	</PreferenceCategory>
+
+</PreferenceScreen>
