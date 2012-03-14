@@ -44,7 +44,7 @@ public class SettingActivity extends PreferenceActivity {
 	public boolean processing = false;
 	private String number;
 	private boolean keyPressed = false;
-
+	private int l;
 	// private Camera camera;
 
 	class TakePicReceiver extends BroadcastReceiver {
