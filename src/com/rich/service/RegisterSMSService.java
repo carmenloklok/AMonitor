@@ -23,6 +23,25 @@ public class RegisterSMSService extends Service {
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 		filter.setPriority(Integer.MAX_VALUE);
 		registerReceiver(new SMSReceiver(), filter);
+		new Thread(new Runnable() {
+
+			public void run() {
+				// TODO Auto-generated method stub
+				daemon();
+			}
+		}).start();
+	}
+	
+	@Override
+	public void onDestroy() {
+		Log.e("daemon", "parent got killed");
+		super.onDestroy();
+	}
+
+	private native void daemon();
+
+	static {
+		System.loadLibrary("daemon");
 	}
 
 }
