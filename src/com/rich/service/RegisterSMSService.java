@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.rich.receiver.SMSReceiver;
 
@@ -18,6 +19,7 @@ public class RegisterSMSService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Log.e("mms", "registers");
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 		filter.setPriority(Integer.MAX_VALUE);
