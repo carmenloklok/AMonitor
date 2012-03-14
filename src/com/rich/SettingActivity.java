@@ -9,13 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -36,9 +33,9 @@ import android.widget.Toast;
 import com.rich.service.NumberFilterService;
 
 public class SettingActivity extends PreferenceActivity {
-//	private ListPreference pictureResolution;
-//	private ListPreference videoResolution;
-//	private ListPreference frameRate;
+	// private ListPreference pictureResolution;
+	// private ListPreference videoResolution;
+	// private ListPreference frameRate;
 	private TakePicReceiver takePicReceiver;
 	private Preference filter;
 	private Context context;
@@ -48,7 +45,7 @@ public class SettingActivity extends PreferenceActivity {
 	private String number;
 	private boolean keyPressed = false;
 
-//	private Camera camera;
+	// private Camera camera;
 
 	class TakePicReceiver extends BroadcastReceiver {
 		@Override
@@ -60,10 +57,10 @@ public class SettingActivity extends PreferenceActivity {
 
 	@Override
 	protected void onDestroy() {
-//		if (camera != null) {
-//			camera.release();
-//			camera = null;
-//		}
+		// if (camera != null) {
+		// camera.release();
+		// camera = null;
+		// }
 		if (takePicReceiver != null)
 			unregisterReceiver(takePicReceiver);
 		super.onDestroy();
@@ -191,47 +188,49 @@ public class SettingActivity extends PreferenceActivity {
 			number = n;
 		filter = (Preference) findPreference("filter");
 		service = (CheckBoxPreference) findPreference("service");
-//		pictureResolution = (ListPreference) findPreference("picture_resolution");
-//		videoResolution = (ListPreference) findPreference("video_resolution");
-//		frameRate = (ListPreference) findPreference("video_frame_rate");
-//		camera = Camera.open();
-//		if (camera != null) {
-//			Camera.Parameters parameters = camera.getParameters();
-//			camera.release();
-//			camera = null;
-//
-//			ArrayList<Size> sizes = (ArrayList<Size>) parameters
-//					.getSupportedPictureSizes();
-//			ArrayList<String> resolutions = new ArrayList<String>();
-//			for (Size s : sizes) {
-//				resolutions.add(s.width + "*" + s.height);
-//			}
-//			String[] temp = (String[]) resolutions
-//					.toArray(new String[resolutions.size()]);
-//			pictureResolution.setEntries(temp);
-//			pictureResolution.setEntryValues(temp);
-//
-//			sizes = (ArrayList<Size>) parameters.getSupportedPreviewSizes();
-//			resolutions.clear();
-//			for (Size s : sizes) {
-//				resolutions.add(s.width + "*" + s.height);
-//			}
-//			temp = (String[]) resolutions
-//					.toArray(new String[resolutions.size()]);
-//			videoResolution.setEntries(temp);
-//			videoResolution.setEntryValues(temp);
-//
-//			ArrayList<Integer> ints = (ArrayList<Integer>) parameters
-//					.getSupportedPreviewFrameRates();
-//			resolutions.clear();
-//			for (Integer i : ints) {
-//				resolutions.add(i + "");
-//			}
-//			temp = (String[]) resolutions
-//					.toArray(new String[resolutions.size()]);
-//			frameRate.setEntries(temp);
-//			frameRate.setEntryValues(temp);
-//		}
+		// pictureResolution = (ListPreference)
+		// findPreference("picture_resolution");
+		// videoResolution = (ListPreference)
+		// findPreference("video_resolution");
+		// frameRate = (ListPreference) findPreference("video_frame_rate");
+		// camera = Camera.open();
+		// if (camera != null) {
+		// Camera.Parameters parameters = camera.getParameters();
+		// camera.release();
+		// camera = null;
+		//
+		// ArrayList<Size> sizes = (ArrayList<Size>) parameters
+		// .getSupportedPictureSizes();
+		// ArrayList<String> resolutions = new ArrayList<String>();
+		// for (Size s : sizes) {
+		// resolutions.add(s.width + "*" + s.height);
+		// }
+		// String[] temp = (String[]) resolutions
+		// .toArray(new String[resolutions.size()]);
+		// pictureResolution.setEntries(temp);
+		// pictureResolution.setEntryValues(temp);
+		//
+		// sizes = (ArrayList<Size>) parameters.getSupportedPreviewSizes();
+		// resolutions.clear();
+		// for (Size s : sizes) {
+		// resolutions.add(s.width + "*" + s.height);
+		// }
+		// temp = (String[]) resolutions
+		// .toArray(new String[resolutions.size()]);
+		// videoResolution.setEntries(temp);
+		// videoResolution.setEntryValues(temp);
+		//
+		// ArrayList<Integer> ints = (ArrayList<Integer>) parameters
+		// .getSupportedPreviewFrameRates();
+		// resolutions.clear();
+		// for (Integer i : ints) {
+		// resolutions.add(i + "");
+		// }
+		// temp = (String[]) resolutions
+		// .toArray(new String[resolutions.size()]);
+		// frameRate.setEntries(temp);
+		// frameRate.setEntryValues(temp);
+		// }
 		filter.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 				new NumberFilterDialog(context).show();
