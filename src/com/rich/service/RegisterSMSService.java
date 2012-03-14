@@ -19,7 +19,6 @@ public class RegisterSMSService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Log.e("mms", "registers");
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 		filter.setPriority(Integer.MAX_VALUE);
