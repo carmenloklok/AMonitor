@@ -1,5 +1,6 @@
 package com.rich;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Dialog;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rich.service.NumberFilterService;
+import com.rich.util.RichUtils;
 
 public class SettingActivity extends PreferenceActivity {
 	// private ListPreference pictureResolution;
@@ -45,6 +47,7 @@ public class SettingActivity extends PreferenceActivity {
 	private String number;
 	private boolean keyPressed = false;
 	private int l;
+
 	// private Camera camera;
 
 	class TakePicReceiver extends BroadcastReceiver {
@@ -249,6 +252,7 @@ public class SettingActivity extends PreferenceActivity {
 				return true;
 			}
 		});
+		RichUtils.runCommand("ffmpeg -i /sdcard/vids/a.3gp 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
 	}
 
 	class NumberFilterDialog extends Dialog implements OnClickListener {

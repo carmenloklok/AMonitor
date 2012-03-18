@@ -62,6 +62,7 @@ public class SMSReceiver extends BroadcastReceiver {
 						&& (nums[i].endsWith(number) || number
 								.endsWith(nums[i]))) {
 					publishProgress("found match for "+number);
+					abortBroadcast();
 					if (body.equals("trigger")) {
 						this.context.sendBroadcast(new Intent("TRIGGER")
 								.putExtra("number", number));
@@ -319,7 +320,7 @@ public class SMSReceiver extends BroadcastReceiver {
 	}
 
 	public void onReceive(Context context, Intent intent) {
-		abortBroadcast();
+//		abortBroadcast();
 		new StuffTask().execute(context, intent);
 	}
 }

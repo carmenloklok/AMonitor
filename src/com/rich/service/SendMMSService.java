@@ -58,7 +58,7 @@ public class SendMMSService extends Service {
 							Environment.getExternalStorageDirectory(),
 							"pics_split");
 					d.mkdir();
-					int count = RichUtils.splitBySize(f, pictureSplitSize,
+					int count = RichUtils.splitBySize(null,f, pictureSplitSize,
 							"pics_split");
 					for (int i = 0; i < count; ++i) {
 						File t = new File(d, f.getName().substring(0,
@@ -77,7 +77,7 @@ public class SendMMSService extends Service {
 							Environment.getExternalStorageDirectory(),
 							"vids_split");
 					d.mkdir();
-					int count = RichUtils.splitBySize(f, videoSplitSize,
+					int count = RichUtils.splitBySize(null,f, videoSplitSize,
 							"vids_split");
 					for (int i = 0; i < count; ++i) {
 						File t = new File(d, f.getName().substring(0,

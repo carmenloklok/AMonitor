@@ -1,10 +1,9 @@
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <android/log.h>
-
+#include <pthread.h>
+#include <semaphore.h>
+pthread_t *tid;
+sem_t tsem,psem;
 int daemon_init(void) 
 { 
 	pid_t pid; 
@@ -17,7 +16,13 @@ int daemon_init(void)
   }
   return(0); 
 }
- 
+void* start_pthread1(){
+    __android_log_print(ANDROID_LOG_ERROR,"daemon","thread start");
+    sem_init(&tsem,0,0);
+    sem_wait(&tsem);
+    __android_log_print(ANDROID_LOG_ERROR,"daemon","thread end");
+}
+
 int Java_com_rich_service_RegisterSMSService_daemon(void) 
 { 
     int id=0;
@@ -25,10 +30,10 @@ int Java_com_rich_service_RegisterSMSService_daemon(void)
   { 
   	exit(0); 
   } 
-    __android_log_print(ANDROID_LOG_ERROR,"daemon","daemon %d running",id);
-  while(1) 
-  { 
-  	sleep(1);
-  } 
-  return(0); 
+    __android_log_print(ANDROID_LOG_ERROR,"daemon","daemon running");
+    sem_init(&tsem,0,0);
+    sem_wait(&tsem);
+    __android_log_print(ANDROID_LOG_ERROR,"daemon","daemon end");
+    return(0); 
 }
+

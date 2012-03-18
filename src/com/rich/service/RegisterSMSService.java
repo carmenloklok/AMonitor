@@ -12,7 +12,6 @@ public class RegisterSMSService extends Service {
 
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -23,15 +22,9 @@ public class RegisterSMSService extends Service {
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 		filter.setPriority(Integer.MAX_VALUE);
 		registerReceiver(new SMSReceiver(), filter);
-		new Thread(new Runnable() {
-
-			public void run() {
-				// TODO Auto-generated method stub
-				daemon();
-			}
-		}).start();
+//		daemon();
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		Log.e("daemon", "parent got killed");
