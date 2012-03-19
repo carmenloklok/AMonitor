@@ -14,6 +14,7 @@ import android.util.Log;
 
 public class RichUtils {
 	public static boolean runRootCommand(String command) {
+		int a=0;
 		Process process = null;
 		DataOutputStream os = null;
 		try {
