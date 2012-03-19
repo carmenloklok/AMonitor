@@ -72,32 +72,60 @@ public class RichUtils {
 			RichUtils.getassetsfile(c, "ffmpeg", tagFile);
 			RichUtils.runCommand("chmod 744 " + tagFile);
 		}
-		runCommand(tagFile
-				+ " -i ~/Movies/a.3gp -ss 00:00:00:00 -fs 870000 -y -vcodec copy -acodec copy ~/Movies/b.3gp");
-		runCommand(tagFile
-				+ " -i ~/Movies/a.3gp  2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
-		return 0;
+		int[] d = getHMS(tagFile, f);
+		int[] d1 = { 0, 0, 0 };
+		String n = f.getName();
+		String suffix = n.substring(n.lastIndexOf('.'));
+		int i = 0;
+		while (d[0] > d1[0] || d[1] > d1[1] || d[2] > d1[2]) {
+			String path = "/sdcard/" + where + "/"
+					+ n.substring(0, n.lastIndexOf('.')) + i + suffix;
+			runCommand(tagFile + " -i " + f.getAbsolutePath() + " -ss " + d1[0]
+					+ ":" + d1[1] + ":" + d1[2] + " -fs " + size
+					+ " -y -vcodec copy -acodec copy " + path);
+			File f1 = new File(path);
+			int[] d2 = getHMS(tagFile, f1);
+			d1[0] += d2[0];
+			d1[1] += d2[1];
+			d1[2] += d2[2];
+//			Log.e("rich", i+" "+d[0]+":"+d[1]+":"+d[2]+" "+d1[0]+":"+d1[1]+":"+d1[2]);
+			i++;
+			if(f1.length()<size)
+				break;
+		}
+		// runCommand(tagFile
+		// +
+		// " -i ~/Movies/a.3gp  2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+		return i;
 	}
 
-	public static boolean runCommand(String command) {
+	public static int[] getHMS(String tagFile, File f) {
+		String out = runCommand(tagFile + " -i " + f.getAbsolutePath());
+		int index = out.indexOf("Duration: ") + 10;
+		String[] t = out.substring(index, index + 8).split(":");
+		int[] ss = { Integer.parseInt(t[0]), Integer.parseInt(t[1]),
+				Integer.parseInt(t[2]) };
+		return ss;
+	}
+
+	public static String runCommand(String command) {
+//		Log.e("rich", command);
 		Process process = null;
+		String t = "";
 		DataOutputStream os = null;
 		try {
 			process = Runtime.getRuntime().exec(command);
 			InputStreamReader isr = new InputStreamReader(
 					process.getErrorStream());
 			int i = 0;
-			String t = "";
 			while ((i = isr.read()) != -1) {
 				char c = (char) i;
 				t += c;
 			}
-			Log.e("rich", t);
 			process.waitFor();
 		} catch (Exception e) {
 			Log.d("*** DEBUG ***", "Unexpected error - Here is what I know: "
 					+ e.getMessage());
-			return false;
 		} finally {
 			try {
 				if (os != null) {
@@ -108,7 +136,7 @@ public class RichUtils {
 				// nothing
 			}
 		}
-		return true;
+		return t;
 	}
 
 	public static int getassetsfile(Context context, String fileName,

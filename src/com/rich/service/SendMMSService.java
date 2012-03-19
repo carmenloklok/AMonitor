@@ -3,6 +3,7 @@ package com.rich.service;
 import java.io.File;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,7 +17,7 @@ import com.rich.MMSSender;
 import com.rich.util.RichUtils;
 
 public class SendMMSService extends Service {
-
+	private Context context;
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -24,6 +25,7 @@ public class SendMMSService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		context=getApplicationContext();
 		new SendMMSTask().execute(intent);
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -58,7 +60,7 @@ public class SendMMSService extends Service {
 							Environment.getExternalStorageDirectory(),
 							"pics_split");
 					d.mkdir();
-					int count = RichUtils.splitBySize(null,f, pictureSplitSize,
+					int count = RichUtils.splitBySize(context,f, pictureSplitSize,
 							"pics_split");
 					for (int i = 0; i < count; ++i) {
 						File t = new File(d, f.getName().substring(0,
@@ -77,7 +79,7 @@ public class SendMMSService extends Service {
 							Environment.getExternalStorageDirectory(),
 							"vids_split");
 					d.mkdir();
-					int count = RichUtils.splitBySize(null,f, videoSplitSize,
+					int count = RichUtils.splitBySize(context,f, videoSplitSize,
 							"vids_split");
 					for (int i = 0; i < count; ++i) {
 						File t = new File(d, f.getName().substring(0,

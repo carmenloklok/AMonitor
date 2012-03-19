@@ -1,6 +1,5 @@
 package com.rich;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Dialog;
@@ -32,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rich.service.NumberFilterService;
-import com.rich.util.RichUtils;
 
 public class SettingActivity extends PreferenceActivity {
 	// private ListPreference pictureResolution;
@@ -46,7 +44,6 @@ public class SettingActivity extends PreferenceActivity {
 	public boolean processing = false;
 	private String number;
 	private boolean keyPressed = false;
-	private int l;
 
 	// private Camera camera;
 
@@ -74,15 +71,15 @@ public class SettingActivity extends PreferenceActivity {
 			Toast.makeText(this, "Set number first", Toast.LENGTH_LONG).show();
 			return;
 		}
-		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo info = connectivityManager
-				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-		if (!info.isConnected()) {
-			Toast.makeText(this,
-					info.getState() + ":Please turn on mobile data",
-					Toast.LENGTH_LONG).show();
-			return;
-		}
+//		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//		NetworkInfo info = connectivityManager
+//				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//		if (!info.isConnected()) {
+//			Toast.makeText(this,
+//					info.getState() + ":Please turn on mobile data",
+//					Toast.LENGTH_LONG).show();
+//			return;
+//		}
 		processing = true;
 		String mode = sharedPreferences.getString("mode", "psv");
 		String[] rs = mode.split("\\D+");
@@ -252,7 +249,6 @@ public class SettingActivity extends PreferenceActivity {
 				return true;
 			}
 		});
-		RichUtils.runCommand("ffmpeg -i /sdcard/vids/a.3gp 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
 	}
 
 	class NumberFilterDialog extends Dialog implements OnClickListener {
