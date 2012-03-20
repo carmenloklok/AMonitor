@@ -6,24 +6,15 @@ import java.io.IOException;
 import java.net.SocketException;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.util.Log;
 
 /**
@@ -45,41 +36,15 @@ public class MMSSender {
 	private static final String HDR_KEY_ACCEPT_LANGUAGE = "Accept-Language";
 	private static final String HDR_VALUE_ACCEPT = "*/*, application/vnd.wap.mms-message, application/vnd.wap.sic";
 
-	public static byte[] sendMMS(Context context, byte[] pdu)
-			throws IOException {
+	public static byte[] sendMMS(Context context, byte[] pdu,
+			DefaultHttpClient client, HttpPost post) throws IOException {
 		// HDR_VALUE_ACCEPT_LANGUAGE = getHttpAcceptLanguage();
-//		APNSwitcher apnSwitcher = new APNSwitcher(context.getContentResolver());
-//		apnSwitcher.switchAPN(true);
-		ConnectivityManager conManager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		conManager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE,
-				"mms");
-		HDR_VALUE_ACCEPT_LANGUAGE = HTTP.UTF_8;
-		SharedPreferences s = context.getSharedPreferences(
-				"com.rich_preferences", 0);
-		String mmscUrl = s.getString("mmsc_url", "");
-		String mmsProxy = s.getString("mms_proxy", "");
-		String mmsPort = s.getString("mms_port", "");
-		if (mmscUrl == null || mmscUrl.equals("")) {
-			return new byte[0];
-		}
-		HttpClient client = null;
+		// APNSwitcher apnSwitcher = new
+		// APNSwitcher(context.getContentResolver());
+		// apnSwitcher.switchAPN(true);
 		try {
 			// Make sure to use a proxy which supports CONNECT.
 			// client = HttpConnector.buileClient(context);
-
-			HttpParams httpParams = new BasicHttpParams();
-			if (!mmsProxy.equals("") && !mmsPort.equals("")) {
-				HttpHost httpHost = new HttpHost(mmsProxy,
-						Integer.parseInt(mmsPort));
-				httpParams
-						.setParameter(ConnRouteParams.DEFAULT_PROXY, httpHost);
-			}
-			HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
-
-			client = new DefaultHttpClient(httpParams);
-
-			HttpPost post = new HttpPost(mmscUrl);
 			// mms PUD START
 			ByteArrayEntity entity = new ByteArrayEntity(pdu);
 			entity.setContentType("application/vnd.wap.mms-message");
@@ -99,8 +64,6 @@ public class MMSSender {
 			HttpResponse response = client.execute(post);
 
 			StatusLine status = response.getStatusLine();
-			context.sendBroadcast(new Intent("com.rich.code").putExtra("code",
-					"status code:" + status.getStatusCode()));
 			Log.d(TAG, "status " + status.getStatusCode());
 			if (status.getStatusCode() != 200) {
 				Log.d(TAG, "!200");
