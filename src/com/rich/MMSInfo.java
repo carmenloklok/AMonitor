@@ -46,6 +46,8 @@ public class MMSInfo {
 			part.setContentType(ContentType.IMAGE_JPG.getBytes());
 		else if (uriStr.endsWith(".3gp"))
 			part.setContentType(ContentType.VIDEO_3GPP.getBytes());
+		if(uriStr.endsWith(".txt"))
+			part.setContentType(ContentType.TEXT_PLAIN.getBytes());
 		part.setDataUri(Uri.parse(uriStr));
 		pduBody.addPart(part);
 	}

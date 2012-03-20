@@ -88,9 +88,18 @@ public class RichUtils {
 			d1[0] += d2[0];
 			d1[1] += d2[1];
 			d1[2] += d2[2];
-//			Log.e("rich", i+" "+d[0]+":"+d[1]+":"+d[2]+" "+d1[0]+":"+d1[1]+":"+d1[2]);
+			while (d1[2] >= 60) {
+				d1[2] = d1[2] - 60;
+				d1[1]++;
+			}
+			while (d1[1] >= 60) {
+				d1[1] = d1[1] - 60;
+				d1[0]++;
+			}
+			// Log.e("rich",
+			// i+" "+d[0]+":"+d[1]+":"+d[2]+" "+d1[0]+":"+d1[1]+":"+d1[2]);
 			i++;
-			if(f1.length()<size)
+			if (f1.length() < size)
 				break;
 		}
 		// runCommand(tagFile
@@ -109,7 +118,7 @@ public class RichUtils {
 	}
 
 	public static String runCommand(String command) {
-//		Log.e("rich", command);
+		// Log.e("rich", command);
 		Process process = null;
 		String t = "";
 		DataOutputStream os = null;

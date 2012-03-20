@@ -89,6 +89,8 @@ public class SendMMSService extends Service {
 					}
 				} else
 					sendMMS(f);
+			}if(f.getName().endsWith(".txt")){
+				sendMMS(f);
 			}
 			publishProgress("end sending mms");
 			return null;

