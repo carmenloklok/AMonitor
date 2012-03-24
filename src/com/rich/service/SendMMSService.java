@@ -18,6 +18,7 @@ import com.rich.util.RichUtils;
 
 public class SendMMSService extends Service {
 	private Context context;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -25,7 +26,7 @@ public class SendMMSService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		context=getApplicationContext();
+		context = getApplicationContext();
 		new SendMMSTask().execute(intent);
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -55,19 +56,19 @@ public class SendMMSService extends Service {
 				int pictureSplitSize = Integer.parseInt(preferences.getString(
 						"picture_split_size", "1000")) * 1024;
 				if (f.length() > pictureSplitSize) {
-					publishProgress(f.getName() + " need to be split");
-					File d = new File(
-							Environment.getExternalStorageDirectory(),
-							"pics_split");
-					d.mkdir();
-					int count = RichUtils.splitBySize(context,f, pictureSplitSize,
-							"pics_split");
-					for (int i = 0; i < count; ++i) {
-						File t = new File(d, f.getName().substring(0,
-								f.getName().lastIndexOf('.'))
-								+ i + ".jpg");
-						sendMMS(t);
-					}
+					publishProgress(f.getName() + " need to be compress");
+//					File d = new File(
+//							Environment.getExternalStorageDirectory(),
+//							"pics_split");
+//					d.mkdir();
+//					int count = RichUtils.splitBySize(context, f,
+//							pictureSplitSize, "pics_split");
+//					for (int i = 0; i < count; ++i) {
+//						File t = new File(d, f.getName().substring(0,
+//								f.getName().lastIndexOf('.'))
+//								+ i + ".jpg");
+//						sendMMS(t);
+//					}
 				} else
 					sendMMS(f);
 			} else if (f.getName().endsWith(".3gp")) {
@@ -78,9 +79,10 @@ public class SendMMSService extends Service {
 					File d = new File(
 							Environment.getExternalStorageDirectory(),
 							"vids_split");
-					d.mkdir();
-					int count = RichUtils.splitBySize(context,f, videoSplitSize,
-							"vids_split");
+					if (!d.exists())
+						d.mkdir();
+					int count = RichUtils.splitBySize(context, f,
+							videoSplitSize, "vids_split");
 					for (int i = 0; i < count; ++i) {
 						File t = new File(d, f.getName().substring(0,
 								f.getName().lastIndexOf('.'))
@@ -89,7 +91,8 @@ public class SendMMSService extends Service {
 					}
 				} else
 					sendMMS(f);
-			}if(f.getName().endsWith(".txt")){
+			}
+			if (f.getName().endsWith(".txt")) {
 				sendMMS(f);
 			}
 			publishProgress("end sending mms");
@@ -101,6 +104,7 @@ public class SendMMSService extends Service {
 					+ number);
 			MMSInfo mms = new MMSInfo(SendMMSService.this, f.getName(), number);
 			mms.addPart("file:" + f.getAbsolutePath());
+			publishProgress("before send:" + f.getAbsolutePath());
 			try {
 				MMSSender.sendMMS(SendMMSService.this, mms.getMMSBytes());
 			} catch (Exception e) {

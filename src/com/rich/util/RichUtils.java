@@ -76,7 +76,7 @@ public class RichUtils {
 		int[] d1 = { 0, 0, 0 };
 		String n = f.getName();
 		String suffix = n.substring(n.lastIndexOf('.'));
-		int i = 0;
+		int i = -1;
 		while (d[0] > d1[0] || d[1] > d1[1] || d[2] > d1[2]) {
 			String path = "/sdcard/" + where + "/"
 					+ n.substring(0, n.lastIndexOf('.')) + i + suffix;
@@ -96,15 +96,10 @@ public class RichUtils {
 				d1[1] = d1[1] - 60;
 				d1[0]++;
 			}
-			// Log.e("rich",
-			// i+" "+d[0]+":"+d[1]+":"+d[2]+" "+d1[0]+":"+d1[1]+":"+d1[2]);
 			i++;
 			if (f1.length() < size)
 				break;
 		}
-		// runCommand(tagFile
-		// +
-		// " -i ~/Movies/a.3gp  2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
 		return i;
 	}
 
