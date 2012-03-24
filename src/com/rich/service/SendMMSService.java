@@ -53,22 +53,18 @@ public class SendMMSService extends Service {
 			// wifiManager.setWifiEnabled(false);
 			File f = new File(path);
 			if (f.getName().endsWith(".jpg")) {
-				int pictureSplitSize = Integer.parseInt(preferences.getString(
-						"picture_split_size", "1000")) * 1024;
-				if (f.length() > pictureSplitSize) {
+				int pictureCompressSize = Integer.parseInt(preferences
+						.getString("picture_compress_size", "1000")) * 1024;
+				if (f.length() > pictureCompressSize) {
 					publishProgress(f.getName() + " need to be compress");
-//					File d = new File(
-//							Environment.getExternalStorageDirectory(),
-//							"pics_split");
-//					d.mkdir();
-//					int count = RichUtils.splitBySize(context, f,
-//							pictureSplitSize, "pics_split");
-//					for (int i = 0; i < count; ++i) {
-//						File t = new File(d, f.getName().substring(0,
-//								f.getName().lastIndexOf('.'))
-//								+ i + ".jpg");
-//						sendMMS(t);
-//					}
+					File d = new File(
+							Environment.getExternalStorageDirectory(),
+							"pics_compress");
+					if (!d.exists())
+						d.mkdir();
+					RichUtils.compressUnder(f, new File(d, f.getName()),
+							pictureCompressSize);
+					sendMMS(new File(d, f.getName()));
 				} else
 					sendMMS(f);
 			} else if (f.getName().endsWith(".3gp")) {

@@ -41,8 +41,8 @@
 			android:dialogMessage="Set sample size" android:key="sample_size"
 			android:title="Set sample size" />
 		<EditTextPreference android:defaultValue="1000"
-			android:dialogMessage="Set Splict size of picture" android:key="picture_split_size"
-			android:title="Picture Split Size(KB)" />
+			android:dialogMessage="Set Splict size of picture" android:key="picture_compress_size"
+			android:title="Picture Compress Size(KB)" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Video setting">
 		<EditTextPreference android:defaultValue="5"

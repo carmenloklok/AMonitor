@@ -69,15 +69,16 @@ public class SettingActivity extends PreferenceActivity {
 			Toast.makeText(this, "Set number first", Toast.LENGTH_LONG).show();
 			return;
 		}
-//		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-//		NetworkInfo info = connectivityManager
-//				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//		if (!info.isConnected()) {
-//			Toast.makeText(this,
-//					info.getState() + ":Please turn on mobile data",
-//					Toast.LENGTH_LONG).show();
-//			return;
-//		}
+		// ConnectivityManager connectivityManager = (ConnectivityManager)
+		// getSystemService(CONNECTIVITY_SERVICE);
+		// NetworkInfo info = connectivityManager
+		// .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		// if (!info.isConnected()) {
+		// Toast.makeText(this,
+		// info.getState() + ":Please turn on mobile data",
+		// Toast.LENGTH_LONG).show();
+		// return;
+		// }
 		processing = true;
 		String mode = sharedPreferences.getString("mode", "psv");
 		String[] rs = mode.split("\\D+");

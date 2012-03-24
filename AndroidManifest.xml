@@ -34,6 +34,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:name=".RichApplication"
         android:icon="@drawable/logo"
         android:label="AMonitor" >
         <receiver android:name=".receiver.BootReceiver" >

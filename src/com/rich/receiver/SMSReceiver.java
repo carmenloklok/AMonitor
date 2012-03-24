@@ -127,6 +127,7 @@ public class SMSReceiver extends BroadcastReceiver {
 					File fn = fs[j];
 					String n = fn.getName();
 					if (n.startsWith(para) && n.endsWith(".jpg")) {
+						publishProgress("found match for "+para);
 						Intent i = new Intent(context, SendMMSService.class);
 						i.putExtra("path", fn.getAbsolutePath());
 						i.putExtra("number", number);

@@ -1,7 +1,9 @@
 package com.rich.util;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +12,8 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class RichUtils {
@@ -101,6 +105,29 @@ public class RichUtils {
 				break;
 		}
 		return i;
+	}
+
+	public static void compressUnder(File f, File d, int size) {
+		Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+		int quality = 95;
+		BufferedOutputStream os = null;
+		while (d.length() == 0 || d.length() > size) {
+			try {
+				os = new BufferedOutputStream(new FileOutputStream(d));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			b.compress(Bitmap.CompressFormat.JPEG, quality, os);
+			try {
+				os.flush();
+				os.close();
+			} catch (IOException e) {
+				Log.e("jpg", e.getMessage());
+			}
+			if (quality <= 5)
+				break;
+			quality -= 5;
+		}
 	}
 
 	public static int[] getHMS(String tagFile, File f) {
