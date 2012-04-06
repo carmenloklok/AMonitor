@@ -17,6 +17,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.mobclick.android.MobclickAgent;
 import com.rich.service.SendMMSService;
 
 public class VidActivity extends Activity implements SurfaceHolder.Callback {
@@ -25,6 +26,18 @@ public class VidActivity extends Activity implements SurfaceHolder.Callback {
 	private SurfaceHolder holder = null;
 	private String mode = null;
 	private File file;
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,9 @@
 package com.rich.util;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +12,8 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class RichUtils {
@@ -76,7 +80,7 @@ public class RichUtils {
 		int[] d1 = { 0, 0, 0 };
 		String n = f.getName();
 		String suffix = n.substring(n.lastIndexOf('.'));
-		int i = 0;
+		int i = -1;
 		while (d[0] > d1[0] || d[1] > d1[1] || d[2] > d1[2]) {
 			String path = "/sdcard/" + where + "/"
 					+ n.substring(0, n.lastIndexOf('.')) + i + suffix;
@@ -96,16 +100,34 @@ public class RichUtils {
 				d1[1] = d1[1] - 60;
 				d1[0]++;
 			}
-			// Log.e("rich",
-			// i+" "+d[0]+":"+d[1]+":"+d[2]+" "+d1[0]+":"+d1[1]+":"+d1[2]);
 			i++;
 			if (f1.length() < size)
 				break;
 		}
-		// runCommand(tagFile
-		// +
-		// " -i ~/Movies/a.3gp  2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
 		return i;
+	}
+
+	public static void compressUnder(File f, File d, int size) {
+		Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+		int quality = 95;
+		BufferedOutputStream os = null;
+		while (d.length() == 0 || d.length() > size) {
+			try {
+				os = new BufferedOutputStream(new FileOutputStream(d));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			b.compress(Bitmap.CompressFormat.JPEG, quality, os);
+			try {
+				os.flush();
+				os.close();
+			} catch (IOException e) {
+				Log.e("jpg", e.getMessage());
+			}
+			if (quality <= 5)
+				break;
+			quality -= 5;
+		}
 	}
 
 	public static int[] getHMS(String tagFile, File f) {

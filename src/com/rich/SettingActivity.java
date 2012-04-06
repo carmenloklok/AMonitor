@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -18,6 +16,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobclick.android.MobclickAgent;
 import com.rich.service.NumberFilterService;
+import com.rich.util.RichUtils;
 
 public class SettingActivity extends PreferenceActivity {
 	// private ListPreference pictureResolution;
@@ -56,6 +57,18 @@ public class SettingActivity extends PreferenceActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
 	protected void onDestroy() {
 		// if (camera != null) {
 		// camera.release();
@@ -71,15 +84,16 @@ public class SettingActivity extends PreferenceActivity {
 			Toast.makeText(this, "Set number first", Toast.LENGTH_LONG).show();
 			return;
 		}
-//		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-//		NetworkInfo info = connectivityManager
-//				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//		if (!info.isConnected()) {
-//			Toast.makeText(this,
-//					info.getState() + ":Please turn on mobile data",
-//					Toast.LENGTH_LONG).show();
-//			return;
-//		}
+		// ConnectivityManager connectivityManager = (ConnectivityManager)
+		// getSystemService(CONNECTIVITY_SERVICE);
+		// NetworkInfo info = connectivityManager
+		// .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		// if (!info.isConnected()) {
+		// Toast.makeText(this,
+		// info.getState() + ":Please turn on mobile data",
+		// Toast.LENGTH_LONG).show();
+		// return;
+		// }
 		processing = true;
 		String mode = sharedPreferences.getString("mode", "psv");
 		String[] rs = mode.split("\\D+");
@@ -177,6 +191,7 @@ public class SettingActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		context = this;
 		super.onCreate(savedInstanceState);
+		MobclickAgent.onError(this);
 		takePicReceiver = new TakePicReceiver();
 		registerReceiver(takePicReceiver, new IntentFilter("TRIGGER"));
 		addPreferencesFromResource(R.xml.setting_activity);
@@ -249,6 +264,7 @@ public class SettingActivity extends PreferenceActivity {
 				return true;
 			}
 		});
+		RichUtils.runRootCommand("");
 	}
 
 	class NumberFilterDialog extends Dialog implements OnClickListener {

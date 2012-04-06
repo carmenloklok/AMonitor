@@ -13,8 +13,8 @@ public class BootReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Intent service1 = new Intent(context, RegisterSMSService.class);
-		context.startService(service1);
+//		Intent service1 = new Intent(context, RegisterSMSService.class);
+//		context.startService(service1);
 		SharedPreferences sharedPreferences = context.getSharedPreferences(
 				"com.rich_preferences", 0);
 		boolean app = sharedPreferences.getBoolean("app", false);

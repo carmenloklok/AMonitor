@@ -25,6 +25,7 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.mobclick.android.MobclickAgent;
 import com.rich.service.SendMMSService;
 
 public class PicActivity extends Activity implements SurfaceHolder.Callback {
@@ -38,6 +39,18 @@ public class PicActivity extends Activity implements SurfaceHolder.Callback {
 	private Camera camera;
 	private int times = 0;
 	private String mode = null;
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
